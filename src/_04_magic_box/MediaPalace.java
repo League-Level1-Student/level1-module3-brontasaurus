@@ -8,6 +8,8 @@ package _04_magic_box;
 
 import java.applet.AudioClip;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,6 +21,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JApplet;
 import javax.swing.JLabel;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
 public class MediaPalace {
 
@@ -50,28 +55,29 @@ public class MediaPalace {
 	 * If this jar has not been added, you can download from: http://www.javazoom.net/javalayer/javalayer.html
 	 * Uncomment this method.
 	 */
-	// private void playMp3FromComputer(String fileName) throws JavaLayerException {
-	// FileInputStream songStream = new FileInputStream(fileName);
+	 public void playMp3FromComputer(String fileName) throws JavaLayerException, FileNotFoundException {
+	FileInputStream songStream = new FileInputStream(fileName);
+	
+	 final Player playMp3 = new Player(songStream);
 	//
-	// final Player playMp3 = new Player(songStream);
-	//
-	// Thread t = new Thread() {
-	// public void run() {
-	// try {
-	// playMp3.play();
-	// } catch (JavaLayerException e) {
+	 Thread t = new Thread() {
+	 public void run() {
+	 try {
+	 playMp3.play();
+	 } catch (JavaLayerException e) {
 	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// }
-	// };
-	// t.start();
-	// }
+	 e.printStackTrace();
+	 }
+	 }
+	 };
+ t.start();
+	 }
 
 	/* This method will use your default mp3 player to play the song */
 	public void playMusicOnComputer(String fileName) {
 		File fileToPlay = new File(fileName);
 		try {
+			System.out.println(java.awt.Desktop.getDesktop());
 			java.awt.Desktop.getDesktop().open(fileToPlay);
 		} catch (IOException e1) {
 			e1.printStackTrace();

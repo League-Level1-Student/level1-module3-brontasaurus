@@ -11,12 +11,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import javazoom.jl.decoder.JavaLayerException;
+
+//import _03_jukebox.Song;
+
+//import _03_jukebox.Song;
 
 public class MagicBox extends JPanel implements Runnable, MouseListener {
 
@@ -25,14 +32,17 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	 * When the user clicks on a secret place, stuff will happen.
 	 * 
 	 * 1. Make the frame respond to mouse clicks.
-	 * 
+
 	 * 2. When the mouse is clicked, use the Media Palace (read the code in the magic_box package) to play sounds, 
 	 *    show images or speak.
-	 * 
+	 
 	 * 3. Choose 3 different locations on the background image.You can either use the mouse position, 
 	 *    or the color of the image, then decide what action the Media Palace should take in each case. 
 	 *     backgroundImage.getRGB(e.getX(), e.getY()) will give you the color of the current pixel.
 	 */
+
+	
+MediaPalace gildan = new MediaPalace();
 
 	BufferedImage backgroundImage;
 
@@ -45,12 +55,15 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 		} catch (Exception w) {
 			System.err.println(w.getMessage());
 		}
+		
+		
 	}
 
 	private void createUI() {
 		JFrame frame = new JFrame("The Magic Box contains many secrets...");
 		frame.add(this);
 		setPreferredSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
+		frame.addMouseListener(this);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -73,9 +86,12 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println("eh");
 		
-	}
-
+			gildan.playSoundFromInternet("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
+		
+			}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
